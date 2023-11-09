@@ -4,28 +4,28 @@ import jakarta.validation.constraints.*;
 
 public class RegistrationBody {
 
-    //    @NotNull
-//    @NotBlank
-//    @Size(min = 3, max = 255)
+    @NotNull
+    @NotBlank
+    @Size(min = 3, max = 255)
     private String username;
 
-//    @Email
-//    @NotBlank
-//    @NotNull
+    @Email
+    @NotBlank
+    @NotNull
     private String email;
 
-//    @NotBlank
-//    @NotNull
-//    @Size(min = 6, max = 32)
-//    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,}$")
+    @NotBlank
+    @NotNull
+    @Size(min = 6, max = 32)
+    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,}$")
     private String password;
 
-//    @NotBlank
-//    @NotNull
+    @NotBlank
+    @NotNull
     private String firstName;
 
-//    @NotBlank
-//    @NotNull
+    @NotBlank
+    @NotNull
     private String lastName;
 
 

@@ -2,6 +2,7 @@ package com.youtube.tutorial.ecommercebackend.service;
 
 
 import com.youtube.tutorial.ecommercebackend.api.model.RegistrationBody;
+import com.youtube.tutorial.ecommercebackend.exception.UserAlreadyExistsException;
 import com.youtube.tutorial.ecommercebackend.model.LocalUser;
 import com.youtube.tutorial.ecommercebackend.model.dao.LocalUserDAO;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,11 @@ public class UserService {
     public UserService(LocalUserDAO localUserDAO) {
         this.localUserDAO = localUserDAO;
     }
-    public LocalUser registerUser(RegistrationBody registrationBody){
+    public LocalUser registerUser(RegistrationBody registrationBody) throws UserAlreadyExistsException {
+        if (localUserDAO.findByEmailIgnoreCase(registrationBody.getEmail()).isPresent() ||
+                localUserDAO.findByUsernameIgnoreCase(registrationBody.getUsername()).isPresent()){
+            throw new UserAlreadyExistsException();
+        }
         LocalUser user = new LocalUser();
         user.setEmail(registrationBody.getEmail());
         user.setFirstName(registrationBody.getFirstName());

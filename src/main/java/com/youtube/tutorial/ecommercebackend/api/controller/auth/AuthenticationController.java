@@ -2,7 +2,11 @@ package com.youtube.tutorial.ecommercebackend.api.controller.auth;
 
 
 import com.youtube.tutorial.ecommercebackend.api.model.RegistrationBody;
+import com.youtube.tutorial.ecommercebackend.exception.UserAlreadyExistsException;
 import com.youtube.tutorial.ecommercebackend.service.UserService;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,8 +20,14 @@ public class AuthenticationController {
         this.userService = userService;
     }
     @PostMapping("register")
-    public  void  registerUser(@RequestBody RegistrationBody registrationBody){
-        userService.registerUser(registrationBody);
+    public ResponseEntity registerUser(@Valid @RequestBody RegistrationBody registrationBody){
+        try {
+            userService.registerUser(registrationBody);
+            return ResponseEntity.ok().build();
+        } catch (UserAlreadyExistsException e) {
+//            throw new RuntimeException(e);
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }
     }
 }
 
